@@ -1,0 +1,20 @@
+name: agent-skills
+version: 1.0.0
+description: Original agent and skills
+author: Sumi Toru
+# Which agent platforms to deploy to.
+# Resolution order: --target flag > this field > auto-detect from filesystem.
+# Accepted values: agent-skills, antigravity, claude, codex, copilot, cursor, gemini, kiro, opencode, windsurf
+targets:
+  - claude
+  - codex
+  - copilot
+  - cursor
+  - gemini
+  - opencode
+  - windsurf
+dependencies:
+  mcp: []
+includes: auto
+scripts: {}
+license: MIT
