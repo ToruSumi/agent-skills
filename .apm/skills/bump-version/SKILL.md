@@ -7,7 +7,7 @@ description: pyproject.toml のバージョンをインクリメントすると�
 
 ## バージョンの管理場所
 
-バージョンは **`pyproject.toml` の 1 箇所のみ** で管理している。
+バージョンは基本的に **`pyproject.toml` の `[project] version`** で管理する。
 
 ```toml
 # pyproject.toml
@@ -15,8 +15,9 @@ description: pyproject.toml のバージョンをインクリメントすると�
 version = "1.3.0"   # ← ここだけ変更する
 ```
 
-`app/components/common.py` の `get_project_version()` がこのファイルを実行時に読み込み、
-サイドバーのバッジとして表示する。**他にバージョン文字列を持つファイルはない。**
+プロジェクトによっては、このバージョンをコード側（例: `get_project_version()` のような関数や
+UIのバッジ表示など）で参照している場合がある。作業前に `grep` 等で他にバージョン文字列を
+ハードコードしているファイルがないか確認し、あればあわせて更新する。
 
 ---
 
@@ -40,11 +41,11 @@ version = "1.3.0"   # ← ここだけ変更する
 
 ```toml
 [project]
-name = "hvac-es-dashboard"
+name = "your-project-name"
 version = "1.4.0"   # 変更後
 ```
 
-3. 保存する（他のファイルの変更は不要）
+3. 保存する（`pyproject.toml` 以外にバージョンを参照している箇所があれば、あわせて変更する）
 
 ---
 

@@ -39,7 +39,7 @@ lint が全てパスしたら pytest を実行する:
 pytest
 ```
 
-- `pyproject.toml` の `[tool.pytest.ini_options]` に従いカバレッジ付きで実行される
+- `pyproject.toml` に `[tool.pytest.ini_options]` 等でカバレッジ設定がある場合は、その設定に従って実行される（設定がなければ通常のテスト実行になる）
 - テスト失敗があればユーザーに報告する
 
 ## 判断フロー
