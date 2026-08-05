@@ -1,3 +1,8 @@
+---
+description: "GitHub Copilotが回答する際に従うべき回答スタイル・禁止事項・優先事項をまとめた指示"
+applyTo: "**"
+---
+
 # Copilot Instruction（回答ルール・制限事項）
 
 ## バージョン: 1.0.0
