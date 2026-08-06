@@ -1,5 +1,5 @@
 name: agent-skills
-version: 1.0.0
+version: 1.0.1
 description: Original agent and skills
 author: Sumi Toru
 # Which agent platforms to deploy to.
@@ -15,6 +15,10 @@ targets:
   - windsurf
 dependencies:
   mcp: []
+  apm:
+    - git: jamesprial/github-skills
+      skills:
+        - gh-cli
 includes: auto
 scripts: {}
 license: MIT
