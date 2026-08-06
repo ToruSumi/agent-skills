@@ -15,6 +15,10 @@ targets:
   - windsurf
 dependencies:
   mcp: []
+  apm:
+    - git: jamesprial/github-skills
+      skills:
+        - gh-cli
 includes: auto
 scripts: {}
 license: MIT
