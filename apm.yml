@@ -1,5 +1,5 @@
 name: agent-skills
-version: 1.0.1
+version: 1.0.2
 description: Original agent and skills
 author: Sumi Toru
 # Which agent platforms to deploy to.
@@ -19,6 +19,9 @@ dependencies:
     - git: jamesprial/github-skills
       skills:
         - gh-cli
+    - git: mattpocock/skills
+      skills:
+        - grill-me
 includes: auto
 scripts: {}
 license: MIT

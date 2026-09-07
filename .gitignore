@@ -3,3 +3,12 @@
 apm_modules/
 build/
 apm.lock.yaml
+
+# IDE
+.claude/
+.codex/
+.cursor/
+.gemini/
+.github/
+.opencode/
+.windsurf/
