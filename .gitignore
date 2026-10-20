@@ -3,6 +3,7 @@
 apm_modules/
 build/
 apm.lock.yaml
+.agents/
 
 # IDE
 .claude/
