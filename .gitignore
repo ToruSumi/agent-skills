@@ -5,6 +5,11 @@ build/
 apm.lock.yaml
 .agents/
 
+# 認証情報
+.env
+.env.*
+!.env.example
+
 # IDE
 .claude/
 .codex/

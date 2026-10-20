@@ -22,14 +22,34 @@ set -euo pipefail
 
 die() { echo "error: $*" >&2; exit 1; }
 
+# .env は shell として評価せず、許可したキーの KEY=VALUE 行だけを読む
+parse_env_file() {
+  local file="$1" line key val
+  if [[ -n "$(find "$file" -perm /077 2>/dev/null)" ]]; then
+    echo "warning: $file の権限が広すぎます (chmod 600 を推奨)" >&2
+  fi
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line%$'\r'}"
+    if [[ -z "$line" || "$line" == \#* ]]; then
+      continue
+    fi
+    if [[ ! "$line" =~ ^(TESTRAIL_URL|TESTRAIL_USER|TESTRAIL_API_KEY)=(.*)$ ]]; then
+      die "$file に未対応の行があります (TESTRAIL_URL/TESTRAIL_USER/TESTRAIL_API_KEY の KEY=VALUE のみ許可)"
+    fi
+    key="${BASH_REMATCH[1]}"
+    val="${BASH_REMATCH[2]}"
+    if [[ "$val" =~ ^\"(.*)\"$ || "$val" =~ ^\'(.*)\'$ ]]; then
+      val="${BASH_REMATCH[1]}"
+    fi
+    printf -v "$key" '%s' "$val"
+  done < "$file"
+}
+
 load_env() {
   if [[ -z "${TESTRAIL_URL:-}" || -z "${TESTRAIL_USER:-}" || -z "${TESTRAIL_API_KEY:-}" ]]; then
     local env_file="${TESTRAIL_ENV_FILE:-./.env}"
     [[ -f "$env_file" ]] || die "認証情報が未設定です (TESTRAIL_URL/TESTRAIL_USER/TESTRAIL_API_KEY または $env_file)"
-    set -a
-    # shellcheck disable=SC1090
-    . "$env_file"
-    set +a
+    parse_env_file "$env_file"
   fi
   TESTRAIL_URL="${TESTRAIL_URL%/}"
   [[ -n "$TESTRAIL_URL" && -n "${TESTRAIL_USER:-}" && -n "${TESTRAIL_API_KEY:-}" ]] || die "認証情報が不足しています"
@@ -39,12 +59,16 @@ load_env() {
 api() {
   local method="$1" endpoint="$2" body="${3:-}"
   local url="$TESTRAIL_URL/index.php?/api/v2/$endpoint"
-  local args=(-s -w '\n%{http_code}' -X "$method" -u "$TESTRAIL_USER:$TESTRAIL_API_KEY" -H "Content-Type: application/json")
+  local auth="${TESTRAIL_USER}:${TESTRAIL_API_KEY}"
+  auth="${auth//\\/\\\\}"
+  auth="${auth//\"/\\\"}"
+  local args=(-s -w '\n%{http_code}' -X "$method" -K - -H "Content-Type: application/json")
   if [[ -n "$body" ]]; then
     args+=(-d "$body")
   fi
   local raw code resp
-  raw="$(curl "${args[@]}" "$url")"
+  # 認証情報は curl の設定として stdin から渡す (引数・環境変数には載せない)
+  raw="$(printf 'user = "%s"\n' "$auth" | curl "${args[@]}" "$url")"
   code="${raw##*$'\n'}"
   resp="${raw%$'\n'*}"
   if [[ "$code" -ge 400 ]]; then
