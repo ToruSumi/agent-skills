@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "description": "Auto-approve safe public HTTPS web fetch and web search requests.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "python3 ./scripts/auto_approve_web.py",
+        "timeout": 5
+      }
+    ]
+  }
+}
