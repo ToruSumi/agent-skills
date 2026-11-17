@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "description": "Enforce project and company security guardrails before tool execution (secrets, destructive commands, Git/Jujutsu safety, and hook/CI tampering protection).",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "python3 ./scripts/guardrails.py",
+        "timeout": 10
+      }
+    ]
+  }
+}
