@@ -1,0 +1,6 @@
+name: agent-skills-copilot
+version: 1.2.1
+description: Copilot agents for agent-skills
+targets: [copilot]
+includes: auto
+license: MIT

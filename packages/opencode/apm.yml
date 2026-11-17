@@ -1,0 +1,6 @@
+name: agent-skills-opencode
+version: 1.2.1
+description: OpenCode V2 agents for agent-skills
+targets: [opencode]
+includes: auto
+license: MIT

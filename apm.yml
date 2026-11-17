@@ -12,11 +12,17 @@ dependencies:
   mcp: []
   apm:
     - git: jamesprial/github-skills
+      ref: e7a08a4d27b0f1bf682e0484459a89151388388b
       skills:
         - gh-cli
     - git: gitea.com/gitea/cli
+      ref: v1.2.0
       skills:
         - gt
+    - path: ./packages/copilot
+      targets: [copilot]
+    - path: ./packages/opencode
+      targets: [opencode]
 includes: auto
 scripts: {}
 license: MIT
