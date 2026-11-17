@@ -6,19 +6,17 @@ author: Sumi Toru
 # Resolution order: --target flag > this field > auto-detect from filesystem.
 # Accepted values: agent-skills, antigravity, claude, codex, copilot, cursor, gemini, kiro, opencode, windsurf
 targets:
-  - claude
-  - codex
   - copilot
-  - cursor
-  - gemini
   - opencode
-  - windsurf
 dependencies:
   mcp: []
   apm:
     - git: jamesprial/github-skills
       skills:
         - gh-cli
+    - git: gitea.com/gitea/cli
+      skills:
+        - gt
 includes: auto
 scripts: {}
 license: MIT
